@@ -73,6 +73,12 @@ THE SOFTWARE.
 #define CXXOPTS_HAS_OPTIONAL
 #endif
 #endif
+#if __has_include(<filesystem>)
+#include <filesystem>
+#ifdef __cpp_lib_filesystem
+#define CXXOPTS_HAS_FILESYSTEM
+#endif
+#endif
 #endif
 
 #define CXXOPTS_FALLTHROUGH
@@ -94,7 +100,7 @@ THE SOFTWARE.
 #endif
 
 #define CXXOPTS__VERSION_MAJOR 3
-#define CXXOPTS__VERSION_MINOR 2
+#define CXXOPTS__VERSION_MINOR 3
 #define CXXOPTS__VERSION_PATCH 1
 
 #if (__GNUC__ < 10 || (__GNUC__ == 10 && __GNUC_MINOR__ < 1)) && __GNUC__ >= 6
@@ -1062,6 +1068,14 @@ namespace cxxopts
         }
 #endif
 
+#ifdef CXXOPTS_HAS_FILESYSTEM
+        inline void
+        parse_value(const std::string &text, std::filesystem::path &value)
+        {
+            value.assign(text);
+        }
+#endif
+
         inline void parse_value(const std::string &text, char &c)
         {
             if (text.length() != 1)
@@ -1073,23 +1087,21 @@ namespace cxxopts
         }
 
         template <typename T>
+        void add_value(const std::string &text, std::vector<T> &value);
+
+        template <typename T>
         void
         parse_value(const std::string &text, std::vector<T> &value)
         {
             if (text.empty())
             {
-                T v;
-                parse_value(text, v);
-                value.emplace_back(std::move(v));
                 return;
             }
             std::stringstream in(text);
             std::string token;
             while (!in.eof() && std::getline(in, token, CXXOPTS_VECTOR_DELIMITER))
             {
-                T v;
-                parse_value(token, v);
-                value.emplace_back(std::move(v));
+                add_value(token, value);
             }
         }
 
@@ -1275,8 +1287,6 @@ namespace cxxopts
         class standard_value<bool> : public abstract_value<bool>
         {
         public:
-            ~standard_value() override = default;
-
             standard_value()
             {
                 set_default_and_implicit();
@@ -1712,6 +1722,12 @@ namespace cxxopts
             }
 
             return viter->second.count();
+        }
+
+        bool
+        contains(const std::string &o) const
+        {
+            return static_cast<bool>(count(o));
         }
 
         const OptionValue &
@@ -2412,7 +2428,7 @@ namespace cxxopts
 
         std::vector<std::string> unmatched;
 
-        while (current != argc)
+        while (current < argc)
         {
             if (strcmp(argv[current], "--") == 0)
             {
@@ -2661,17 +2677,17 @@ namespace cxxopts
     {
         using OptionHelp = std::vector<std::pair<String, String>>;
 
+        String result;
+
         auto group = m_help.find(g);
         if (group == m_help.end())
         {
-            return "";
+            return result;
         }
 
         OptionHelp format;
 
         std::size_t longest = 0;
-
-        String result;
 
         if (!g.empty())
         {

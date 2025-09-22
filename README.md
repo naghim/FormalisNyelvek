@@ -6,7 +6,8 @@ Az eheti feladat egy determinisztikus véges automata (DFA) szimulációjának m
 
 A feladatok kiértékelése egy automatikus rendszerrel történik, amely **minden egyes** pusholás után lefut. Ezért kiemelten fontos a pontos megvalósítás és a megfelelő kimenetek biztosítása. A legkisebb eltérés is hibás teszteredményekhez vezethet!
 
-A projekt indulópontja a kötelezően használandó `project` modul vagy `main.cpp` fájl lesz (érdemes az elején eldönteni és utána abban dolgozni, az esetleges menet közbeni nyelvváltás nem ajánlott, mivel a feladatok egymásra épülnek, ezért újra kell implementálni az addigi feladatokat - amennyiben mégis erre kerülne sor, ezt jelezd mindenképp a labortanárnődnek). A létrehozott starter projektet szabadon ki lehet bővíteni, de a főfájl megnevezése nem változtatható. Minden egyes pusholáskor az automatikus tesztek lefutnak, így többször is ellenőrizheted a program helyes működését.
+A projekt indulópontja a kötelezően használandó `project` modul vagy `main.cpp` fájl lesz (érdemes az elején eldönteni és utána abban dolgozni, az esetleges menet közbeni nyelvváltás nem ajánlott, mivel a feladatok egymásra épülnek, ezért újra kell implementálni az addigi feladatokat - amennyiben mégis erre kerülne sor, ezt jelezd). A létrehozott starter projektet szabadon ki lehet bővíteni, de a főfájl megnevezése nem változtatható. Minden egyes pusholáskor az automatikus tesztek lefutnak, így többször is ellenőrizheted a program helyes működését. Az összesítő eredmények a GitHub felületén, a
+commitok mellett jelennek meg: zöld pipa jelzi a sikeres tesztelést, piros X pedig a hibát. Hibás teszt esetén a részletes logokban megtalálható, hogy pontosan mi okozta a problémát, így a visszajelzés alapján könnyen javítható a kód.
 
 A feladatok manuális átvizsgáláson is átesnek, hogy kiszűrjük az esetleges csalásokat vagy másolásokat.
 
@@ -22,11 +23,11 @@ Python esetén a `python-starter` nevű mappa tartalmaz egy kiinduló projektet,
 
 A repository tartalmaz egy `project` nevű modult, amelyben van egy `problems` nevű almodul. Mindenképp tartsuk meg ezt a mappaszerkezetet, hogy az automatikus tesztek lefussanak.
 
-Amennyiben a saját kódunkat akarjuk hozzáadni a projekthez, szükséges egy újabb fájl létrehozása a `problems` mappában tetszőleges néven. Ahhoz, hogy a rendszerbe beintegrálódjon a megoldásunk, fontos, hogy az új fájl taralmazzon egy osztályt, amelyet a `Problems` osztályból származtatunk. Az almodul tartalmaz egy példa fájlt (feladatot) erre, amely bemutatja hogyan lehet ezt kivitelezni: ez lesz a `sum.py`, amely beolvassa az argumentumokat, majd összeadja azokat.
+Amennyiben a saját kódunkat akarjuk hozzáadni a projekthez, szükséges egy újabb fájl létrehozása a `problems` mappában tetszőleges néven. Ahhoz, hogy a rendszerbe beintegrálódjon a megoldásunk, fontos, hogy az új fájl taralmazzon egy osztályt, amelyet a `Problems` osztályból származtatunk. Az almodul tartalmaz egy példa fájlt (feladatot) erre, amely bemutatja hogyan lehet ezt kivitelezni: ez lesz a `sum.py`, amely beolvassa az argumentumokat, majd összeadja azokat (a számok vesszővel vannak elválasztva). A **bemeneti fájlok** a `python-starter` mappába kell kerüljenek.
 
 A program és a teljes start projekt el van látva kommentekkel, amelyek segítenek a megértésében és a benne való eligazodásában.
 
-Ha nem szeretnénk használni a megadott sablont, helyettesíthetjük bármivel. A fontos az, hogy maradjon meg a project nevű modul, és futtatható legyen a következő parancssal:
+Ha nem szeretnénk használni a megadott sablont, helyettesíthetjük bármivel. A fontos az, hogy maradjon meg a `project` nevű modul, és futtatható legyen a következő paranccsal:
 
 ```bash
 python -m project
@@ -38,7 +39,7 @@ C++ esetén a `cpp-starter` nevű mappa tartalmaz egy kiinduló projektet, ami h
 
 Mindenképp tartsuk meg a `CMakeLists.txt` állományt, hogy az automatikus tesztek lefussanak.
 
-Amennyiben a saját kódunkat akarjuk hozzáadni a projekthez, szükséges egy új cpp/hpp pár létrehozása a `problems` mappában tetszőleges néven. Ahhoz, hogy a rendszerbe beintegrálódjon a megoldásunk, fontos, hogy az új fájl taralmazzon egy osztályt, amelyet a `Problem` osztályból származtatunk (`problem.hpp` headerből). Az osztályunkat be kell helyezni a `main.cpp`-ben a `problems` nevű vektorba. A kiinduló projekt tartalmaz egy példa feladatot erre, amely bemutatja hogyan lehet ezt kivitelezni: ez lesz a `sum.cpp` és a `sum.hpp` állomány, amely beolvassa az argumentumokat, majd összeadja azokat.
+Amennyiben a saját kódunkat akarjuk hozzáadni a projekthez, szükséges egy új cpp/hpp pár létrehozása a `problems` mappában tetszőleges néven. Ahhoz, hogy a rendszerbe beintegrálódjon a megoldásunk, fontos, hogy az új fájl taralmazzon egy osztályt, amelyet a `Problem` osztályból származtatunk (`problem.hpp` headerből). Az osztályunkat be kell helyezni a `main.cpp`-ben a `problems` nevű vektorba. A kiinduló projekt tartalmaz egy példa feladatot erre, amely bemutatja hogyan lehet ezt kivitelezni: ez lesz a `sum.cpp` és a `sum.hpp` állomány, amely beolvassa az argumentumokat, majd összeadja azokat (a számok szóközzel vagy új sorral vannak elválasztva). A **bemeneti fájlok** a `build` mappába kell kerüljenek.
 
 A program és a teljes start projekt el van látva kommentekkel, amelyek segítenek a megértésében és a benne való eligazodásában.
 
